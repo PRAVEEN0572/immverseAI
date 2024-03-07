@@ -10,5 +10,18 @@ pipeline {
                 }
             }
         }
+        stage('Push to Registry') {
+            steps {
+                sh 'docker login -u praveen0572 -p 16K11A0572@p docker.io' 
+                sh 'docker tag node-image praveen0572/node-image:latest' 
+                sh 'docker push praveen0572/node-image:latest' 
+            }
+        }
+        stage('Deploy to Kubernetes') {
+             steps {
+                kubernetesDeploy(configs: 'deploy.yaml')
+             }
+        }
+
     }
 }
