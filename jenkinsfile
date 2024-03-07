@@ -7,18 +7,17 @@ pipeline {
                 script {
                     def dockerImage = docker.build('node-image:node', '-f Dockerfile .')
                     dockerImage.push() // Optional: Push the built image to a registry :https://hub.docker.com/_/registry
+                    docker.withRegistry('https://hub.docker.com/_/registry', 'be89feb4-e3c4-4dd4-bc7f-d79886a3b738')
+                    docker.image('node-image').push('latest')
                 }
             }
      }
         stage('Push to Registry') {
             steps {
-                 docker.withRegistry('https://hub.docker.com/_/registry', 'be89feb4-e3c4-4dd4-bc7f-d79886a3b738') {
-                docker.image('node-image').push('latest')
                 sh 'docker tag node-image praveen0572/node-image:latest' 
                 sh 'docker push praveen0572/node-image:latest' 
             }
           }
-        }
         stage('config Kubernetes') {
              steps {
                 kubernetesDeploy(configs: 'deploy.yaml')
