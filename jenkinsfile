@@ -6,13 +6,15 @@ pipeline {
             steps {
                 script {
                     def dockerImage = docker.build('node-image:node', '-f Dockerfile .')
-                    dockerImage.push() // Optional: Push the built image to a registry
+                    dockerImage.push() // Optional: Push the built image to a registry :https://hub.docker.com/_/registry
                 }
             }
-        }
+     }
+}
         stage('Push to Registry') {
             steps {
-                sh 'docker login -u praveen0572 -p 16K11A0572@p docker.io' 
+                 docker.withRegistry('https://index.docker.io/v1/', 'be89feb4-e3c4-4dd4-bc7f-d79886a3b738') {
+                docker.image('node-image').push('latest')
                 sh 'docker tag node-image praveen0572/node-image:latest' 
                 sh 'docker push praveen0572/node-image:latest' 
             }
@@ -21,6 +23,16 @@ pipeline {
              steps {
                 kubernetesDeploy(configs: 'deploy.yaml')
              }
+        }
+   stage('Deploy to Kubernetes') {
+            steps {
+                // Assuming your manifests are in a 'kubernetes' folder within the workspace
+                script {
+                    sh 'kubectl apply -f kubernetes/deploy.yaml'
+                    // Apply service manifest if needed
+                    sh 'kubectl apply -f kubernetes/service.yaml'
+                }
+            }
         }
 
     }
