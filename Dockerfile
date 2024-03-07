@@ -1,5 +1,13 @@
 FROM node:14-alpine
+
 WORKDIR /app
-COPY . .
-EXPOSE 3000
-CMD ["node", "sample.js"]
+
+COPY package.json./
+
+RUN npm install
+
+COPY  . . 
+
+CMD ["node", "index.js"]
+
+EXPOSE 8080
