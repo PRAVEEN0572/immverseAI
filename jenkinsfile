@@ -1,0 +1,14 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def dockerImage = docker.build('node-image:node', '-f Dockerfile .')
+                    dockerImage.push() // Optional: Push the built image to a registry
+                }
+            }
+        }
+    }
+}
