@@ -12,14 +12,14 @@ pipeline {
      }
         stage('Push to Registry') {
             steps {
-                 docker.withRegistry('https://index.docker.io/v1/', 'be89feb4-e3c4-4dd4-bc7f-d79886a3b738') {
+                 docker.withRegistry('https://hub.docker.com/_/registry', 'be89feb4-e3c4-4dd4-bc7f-d79886a3b738') {
                 docker.image('node-image').push('latest')
                 sh 'docker tag node-image praveen0572/node-image:latest' 
                 sh 'docker push praveen0572/node-image:latest' 
             }
           }
         }
-        stage('Deploy to Kubernetes') {
+        stage('config Kubernetes') {
              steps {
                 kubernetesDeploy(configs: 'deploy.yaml')
              }
