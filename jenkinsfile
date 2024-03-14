@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     def dockerImage = docker.build('node-image:node', '-f Dockerfile .')
-                    docker.withRegistry('https://hub.docker.com/_/registry', 'be89feb4-e3c4-4dd4-bc7f-d79886a3b738')
+                    docker.withRegistry('https://hub.docker.com/_/registry', '2f3b4809-508a-4755-833c-ba125c93e7a6')
                     dockerImage.push() // Optional: Push the built image to a registry :https://hub.docker.com/_/registry
                     docker.image('node-image').push('latest')
                 }
