@@ -5,9 +5,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                 def dockerImage = docker.build('node-image:node', '-f Dockerfile .')
+                   sh 'docker login -u praveen0572 -p dckr_pat_h8g0PpBCtChylOtbHOMblTFQVtg'
+                   def dockerImage = docker.build('node-image:node', '-f Dockerfile .')
                     dockerImage.push() // Optional: Push the built image to a registry
-                    sh 'docker login -u praveen0572 -p dckr_pat_h8g0PpBCtChylOtbHOMblTFQVtg'
+                    // sh 'docker login -u praveen0572 -p dckr_pat_h8g0PpBCtChylOtbHOMblTFQVtg'
 
 
 
