@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('git clone') {
-            steps {
-                sh 'https://github.com/PRAVEEN0572/immverseAI.git'
-            }
-        }
         stage('build and tag docker image') {
             steps {
               script{
