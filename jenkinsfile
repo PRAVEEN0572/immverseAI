@@ -5,9 +5,6 @@ pipeline {
         stage('build and tag docker image') {
             steps {
                 script {
-                    // Grant Jenkins access to Docker daemon socket
-                    sh 'usermod -aG docker jenkins'
-
                     // Build the Docker image and tag it
                     withDockerRegistry(credentialsId: 'Docker-cred', toolName: 'docker') {
                         sh 'docker build -t praveen0572/node:latest .'
@@ -18,9 +15,6 @@ pipeline {
         stage('push docker image') {
             steps {
                 script {
-                    // Grant Jenkins access to Docker daemon socket
-                    sh 'usermod -aG docker jenkins'
-
                     // Push the Docker image to the registry
                     withDockerRegistry(credentialsId: 'Docker-cred', toolName: 'docker') {
                         sh 'docker push praveen0572/node:latest'
