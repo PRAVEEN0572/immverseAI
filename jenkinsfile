@@ -4,20 +4,22 @@ pipeline {
     stages {
         stage('build and tag docker image') {
             steps {
-              script{
-            withDockerRegistry(credentialsId: 'Docker-cred', toolName: 'docker') {
-            sh 'docker build -t praveen0572/node:latest'
-          }
-        }
+                script {
+                    // Build the Docker image and tag it
+                    withDockerRegistry(credentialsId: 'Docker-cred', toolName: 'docker') {
+                        sh 'docker build -t praveen0572/node:latest .'
+                    }
+                }
             }
         }    
         stage('push docker image') {
-            steps{
-                script{
-            withDockerRegistry(credentialsId: 'Docker-cred', toolName: 'docker') {
-            sh 'docker push praveen0572/node:latest'
-          }
-        }
+            steps {
+                script {
+                    // Push the Docker image to the registry
+                    withDockerRegistry(credentialsId: 'Docker-cred', toolName: 'docker') {
+                        sh 'docker push praveen0572/node:latest'
+                    }
+                }
             }
         }    
     }
