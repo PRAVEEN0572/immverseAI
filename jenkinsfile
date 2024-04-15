@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Grant Jenkins access to Docker daemon socket
-                    sh 'sudo usermod -aG docker jenkins'
+                    sh 'usermod -aG docker jenkins'
 
                     // Build the Docker image and tag it
                     withDockerRegistry(credentialsId: 'Docker-cred', toolName: 'docker') {
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     // Grant Jenkins access to Docker daemon socket
-                    sh 'sudo usermod -aG docker jenkins'
+                    sh 'usermod -aG docker jenkins'
 
                     // Push the Docker image to the registry
                     withDockerRegistry(credentialsId: 'Docker-cred', toolName: 'docker') {
